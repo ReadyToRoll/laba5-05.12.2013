@@ -1,35 +1,8 @@
 #include <iostream>
 #include <vector>
+#include <tr1/memory>
 
 using namespace std;
-
-class Transporter;
-
-template <typename T>
-class smart_pointer
-{
-    T *m_obj;
-public:
-    smart_pointer(T *obj)
-        : m_obj(obj)
-    { }
-    ~smart_pointer()
-    {
-        delete m_obj;
-    }
-    T* operator->()
-    {
-        return m_obj;
-    }
-    T& operator* ()
-    {
-        return *m_obj;
-    }
-    /* T& operator<< ()
-     {
-         cout<<m_obj.speed;
-     }*/
-};
 
 class Transporter
 {
@@ -131,11 +104,6 @@ int setDestination()
         return w;
 }
 
-/*void showContainer
-{
-
-}*/
-
 int main()
 {
     int distance,w,ch;
@@ -148,29 +116,29 @@ int main()
     double resultTimeAir, resultTimeBus, resultTimeTrain;
     double resultCostAir, resultCostBus, resultCostTrain;
 
-    smart_pointer<Airplane> minskAir (new Airplane(0.5,750));
-    smart_pointer<Bus> minskBus (new Bus(0.2,110));
-    smart_pointer<Train> minskTrain (new Train(0.3,90));
+    std::tr1::shared_ptr<Airplane> minskAir(new Airplane(0.5,750));
+    std::tr1::shared_ptr<Bus> minskBus (new Bus(0.2,110));
+    std::tr1::shared_ptr<Train> minskTrain (new Train(0.3,90));
 
-    smart_pointer<Airplane> valenciaAir (new Airplane(0.4,750));
-    smart_pointer<Bus> valenciaBus (new Bus(0.5,110));
-    smart_pointer<Train> valenciaTrain (new Train(0.3,90));
+    std::tr1::shared_ptr<Airplane> valenciaAir (new Airplane(0.4,750));
+    std::tr1::shared_ptr<Bus> valenciaBus (new Bus(0.5,110));
+    std::tr1::shared_ptr<Train> valenciaTrain (new Train(0.3,90));
 
-    smart_pointer<Airplane> brestAir (new Airplane(0,750));
-    smart_pointer<Bus> brestBus (new Bus(0.2,110));
-    smart_pointer<Train> brestTrain (new Train(0.3,90));
+    std::tr1::shared_ptr<Airplane> brestAir (new Airplane(0,750));
+    std::tr1::shared_ptr<Bus> brestBus (new Bus(0.2,110));
+    std::tr1::shared_ptr<Train> brestTrain (new Train(0.3,90));
 
-    smart_pointer<Airplane> gomelAir (new Airplane(0,750));
-    smart_pointer<Bus> gomelBus (new Bus(0.2,110));
-    smart_pointer<Train> gomelTrain (new Train(0.3,90));
+    std::tr1::shared_ptr<Airplane> gomelAir (new Airplane(0,750));
+    std::tr1::shared_ptr<Bus> gomelBus (new Bus(0.2,110));
+    std::tr1::shared_ptr<Train> gomelTrain (new Train(0.3,90));
 
-    smart_pointer<Airplane> mogilevAir (new Airplane(0,750));
-    smart_pointer<Bus> mogilevBus (new Bus(0.2,110));
-    smart_pointer<Train> mogilevTrain (new Train(0.3,90));
+    std::tr1::shared_ptr<Airplane> mogilevAir (new Airplane(0,750));
+    std::tr1::shared_ptr<Bus> mogilevBus (new Bus(0.2,110));
+    std::tr1::shared_ptr<Train> mogilevTrain (new Train(0.3,90));
 
-    smart_pointer<Airplane> bariAir (new Airplane(0.4,750));
-    smart_pointer<Bus> bariBus (new Bus(0.5,110));
-    smart_pointer<Train> bariTrain (new Train(0.4,90));
+    std::tr1::shared_ptr<Airplane> bariAir (new Airplane(0.4,750));
+    std::tr1::shared_ptr<Bus> bariBus (new Bus(0.5,110));
+    std::tr1::shared_ptr<Train> bariTrain (new Train(0.4,90));
 
     vector <Airplane> air;
     air.push_back(*minskAir);
