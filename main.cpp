@@ -1,8 +1,44 @@
 #include <iostream>
 #include <vector>
-#include <tr1/memory>
 
 using namespace std;
+
+template <class Templ>
+class SharedPtr
+{
+private:
+    Templ* ptr;
+    int* count;
+    void deleteData()
+    {
+        if (--*count == 0)
+        {
+            delete count;
+            delete ptr;
+        }
+    }
+public:
+    SharedPtr():ptr(0), count(new int(0)){}
+    explicit SharedPtr(Templ* p=0): ptr(p), count(new int(1)) {}
+    SharedPtr(const SharedPtr<Templ>& p) throw(): ptr(p.ptr), count(p.count){++*count;}
+    ~SharedPtr()
+    {
+        deleteData();
+    }
+    Templ& operator*(){return *ptr;}
+    Templ* operator->(){return ptr;}
+    SharedPtr<Templ>& operator= (const SharedPtr<Templ>& p) throw()
+    {
+        if(this!=&p)
+        {
+            deleteData();
+            ptr=p.ptr;
+            count=p.count;
+            ++*count;
+        }
+        return *this;
+    }
+};
 
 class Transporter
 {
@@ -116,29 +152,29 @@ int main()
     double resultTimeAir, resultTimeBus, resultTimeTrain;
     double resultCostAir, resultCostBus, resultCostTrain;
 
-    std::tr1::shared_ptr<Airplane> minskAir(new Airplane(0.5,750));
-    std::tr1::shared_ptr<Bus> minskBus (new Bus(0.2,110));
-    std::tr1::shared_ptr<Train> minskTrain (new Train(0.3,90));
+    SharedPtr<Airplane> minskAir(new Airplane(0.5,750));
+    SharedPtr<Bus> minskBus (new Bus(0.2,110));
+    SharedPtr<Train> minskTrain (new Train(0.3,90));
 
-    std::tr1::shared_ptr<Airplane> valenciaAir (new Airplane(0.4,750));
-    std::tr1::shared_ptr<Bus> valenciaBus (new Bus(0.5,110));
-    std::tr1::shared_ptr<Train> valenciaTrain (new Train(0.3,90));
+    SharedPtr<Airplane> valenciaAir (new Airplane(0.4,750));
+    SharedPtr<Bus> valenciaBus (new Bus(0.5,110));
+    SharedPtr<Train> valenciaTrain (new Train(0.3,90));
 
-    std::tr1::shared_ptr<Airplane> brestAir (new Airplane(0,750));
-    std::tr1::shared_ptr<Bus> brestBus (new Bus(0.2,110));
-    std::tr1::shared_ptr<Train> brestTrain (new Train(0.3,90));
+    SharedPtr<Airplane> brestAir (new Airplane(0,750));
+    SharedPtr<Bus> brestBus (new Bus(0.2,110));
+    SharedPtr<Train> brestTrain (new Train(0.3,90));
 
-    std::tr1::shared_ptr<Airplane> gomelAir (new Airplane(0,750));
-    std::tr1::shared_ptr<Bus> gomelBus (new Bus(0.2,110));
-    std::tr1::shared_ptr<Train> gomelTrain (new Train(0.3,90));
+    SharedPtr<Airplane> gomelAir (new Airplane(0,750));
+    SharedPtr<Bus> gomelBus (new Bus(0.2,110));
+    SharedPtr<Train> gomelTrain (new Train(0.3,90));
 
-    std::tr1::shared_ptr<Airplane> mogilevAir (new Airplane(0,750));
-    std::tr1::shared_ptr<Bus> mogilevBus (new Bus(0.2,110));
-    std::tr1::shared_ptr<Train> mogilevTrain (new Train(0.3,90));
+    SharedPtr<Airplane> mogilevAir (new Airplane(0,750));
+    SharedPtr<Bus> mogilevBus (new Bus(0.2,110));
+    SharedPtr<Train> mogilevTrain (new Train(0.3,90));
 
-    std::tr1::shared_ptr<Airplane> bariAir (new Airplane(0.4,750));
-    std::tr1::shared_ptr<Bus> bariBus (new Bus(0.5,110));
-    std::tr1::shared_ptr<Train> bariTrain (new Train(0.4,90));
+    SharedPtr<Airplane> bariAir (new Airplane(0.4,750));
+    SharedPtr<Bus> bariBus (new Bus(0.5,110));
+    SharedPtr<Train> bariTrain (new Train(0.4,90));
 
     vector <Airplane> air;
     air.push_back(*minskAir);
